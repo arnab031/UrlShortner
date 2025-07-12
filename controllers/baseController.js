@@ -54,6 +54,8 @@ module.exports = {
       req.headers["x-forwarded-for"] || req.socket.remoteAddress
     );
 
+    res.redirect(data.longUrl);
+    
     const clickedData = {
       shortCode,
       timestamp: new Date(), // This must be a JS Date object or ISO string
@@ -79,6 +81,5 @@ module.exports = {
         err.errors.forEach((e) => console.error("Row error:", e));
       }
     }
-    res.redirect(data.longUrl);
   },
 };
