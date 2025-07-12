@@ -1,7 +1,7 @@
 const db = require("../configuration/firebaseConfig");
 const geoip = require("geoip-lite");
 const UAParser = require("ua-parser-js");
-const { DateTime } = require("luxon");
+
 const { customAlphabet } = require("nanoid");
 const bigquery = require("../configuration/bigqueryConfig");
 const nanoid = customAlphabet(
@@ -56,12 +56,15 @@ module.exports = {
 
     res.redirect(data.longUrl);
 
-    const istDateTime = DateTime.now().setZone("Asia/Kolkata").toISO(); // ISO string in IST
+    const xForwardedFor = req.headers["x-forwarded-for"] || "";
+    const ip = xForwardedFor ? xForwardedFor.split(",")[0].trim() : null;
+    console.log("IP Address:", ip);
 
     const clickedData = {
       shortCode,
-      timestamp: istDateTime, // Now stores IST time
-      ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress || "",
+      timestamp: new Date(), // This must be a JS Date object or ISO string
+      // ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress || "",
+      ip: ip || "",
       userAgent: req.headers["user-agent"] || "",
       referer: req.headers["referer"] || "",
       country: geo?.country || "",
