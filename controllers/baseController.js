@@ -31,7 +31,7 @@ module.exports = {
 
     res.json({
       message: "Short URL created successfully",
-      shortUrl: `https://yourdomain.com/${shortCode}`, // Replace with your actual domain
+      shortUrl: `${process.env.BASE_URL + "/" + shortCode}`, // Replace with your actual domain
     });
   },
 
