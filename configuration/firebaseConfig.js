@@ -9,7 +9,7 @@
 const admin = require("firebase-admin");
 // const firebaseConfig = require("./firebaseConfig.json");
 // Parse the secret string from env
-const firebaseConfig = JSON.parse(process.env.firebaseConfig);
+const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
 
 admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
