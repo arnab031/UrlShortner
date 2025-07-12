@@ -56,17 +56,14 @@ module.exports = {
 
     res.redirect(data.longUrl);
 
-    const xForwardedFor = req.headers["x-forwarded-for"] || "";
-    const ip = xForwardedFor ? xForwardedFor.split(",")[0].trim() : null;
-    console.log("IP Address:", ip);
-
     const clickedData = {
       shortCode,
       timestamp: new Date(), // This must be a JS Date object or ISO string
-      // ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress || "",
-      ip: ip || "",
+      ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress || "",
       userAgent: req.headers["user-agent"] || "",
       referer: req.headers["referer"] || "",
+      city: geo?.city || "",
+      state: geo?.region || "",
       country: geo?.country || "",
       device: ua.getDevice().type || "desktop",
       os: ua.getOS().name || "",
