@@ -56,6 +56,8 @@ module.exports = {
 
     res.redirect(data.longUrl);
 
+    console.log("Geo data:", geo);
+
     const clickedData = {
       shortCode,
       timestamp: new Date(), // This must be a JS Date object or ISO string
