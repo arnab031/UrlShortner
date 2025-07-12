@@ -7,11 +7,13 @@
 
 // firestore.js
 const admin = require("firebase-admin");
-// const serviceAccount = require("./firebaseConfig.json");
+// const firebaseConfig = require("./firebaseConfig.json");
+// Parse the secret string from env
+const firebaseConfig = JSON.parse(process.env.firebaseConfig);
 
 admin.initializeApp({
-  //   credential: admin.credential.cert(serviceAccount),
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(firebaseConfig),
+  // credential: admin.credential.applicationDefault(),
 });
 
 const db = admin.firestore();
