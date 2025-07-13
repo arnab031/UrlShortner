@@ -1,9 +1,9 @@
 const db = require("../configuration/firebaseConfig");
-const geoip = require("geoip-lite");
 const UAParser = require("ua-parser-js");
 
 const { customAlphabet } = require("nanoid");
 const bigquery = require("../configuration/bigqueryConfig");
+const { default: axios } = require("axios");
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
   12
@@ -50,24 +50,26 @@ module.exports = {
     }
 
     const ua = new UAParser(req.headers["user-agent"]);
-    const geo = geoip.lookup(
-      req.headers["x-forwarded-for"] || req.socket.remoteAddress
-    );
 
     res.redirect(data.longUrl);
 
-    console.log("Geo data:", geo);
+    // console.log("Geo data:", geo);
+
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
+
+    const response = await axios.get(`https://ipapi.co/${ip}/json`);
+    console.log(response.data);
 
     const clickedData = {
       shortCode,
       longUrl: data.longUrl,
       timestamp: new Date(), // This must be a JS Date object or ISO string
-      ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress || "",
+      ip: ip,
       userAgent: req.headers["user-agent"] || "",
       referer: req.headers["referer"] || "",
-      city: geo?.city || "",
-      state: geo?.region || "",
-      country: geo?.country || "",
+      city: response.data?.city || "",
+      state: response.data?.region || "",
+      country: response.data?.country || "",
       device: ua.getDevice().type || "desktop",
       os: ua.getOS().name || "",
       browser: ua.getBrowser().name || "",
