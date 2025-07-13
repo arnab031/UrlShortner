@@ -24,7 +24,7 @@ module.exports = {
         longUrl,
         createdAt: new Date(),
         // clickLimit: 1000,
-        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+        expiresAt: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000), // 180 days
       });
 
     console.log("Short URL stored:", shortCode);
