@@ -60,6 +60,7 @@ module.exports = {
 
     const clickedData = {
       shortCode,
+      longUrl: data.longUrl,
       timestamp: new Date(), // This must be a JS Date object or ISO string
       ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress || "",
       userAgent: req.headers["user-agent"] || "",
