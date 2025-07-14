@@ -14,6 +14,15 @@ module.exports = {
     res.json({ message: "Test endpoint is working!" });
   },
 
+  async baseUrl(req, res) {
+    try {
+      res.redirect("https://utsavapp.in"); // Replace with your actual 404 page
+      return;
+    } catch (error) {
+      console.log("Error: " + error);
+    }
+  },
+
   async storeShortUrl(req, res) {
     const { longUrl } = req.body;
     const shortCode = nanoid(12); // Generate a unique short code
