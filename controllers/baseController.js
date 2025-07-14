@@ -45,8 +45,9 @@ module.exports = {
   },
 
   async getLongUrl(req, res) {
-    const { shortCode } = req.params;
-    const doc = await db.collection("ShortLinks").doc(shortCode).get();
+    const { id } = req.query;
+    const shortCode = id;
+    const doc = await db.collection("ShortLinks").doc(id).get();
     if (!doc.exists) {
       res.redirect("https://utsavapp.in"); // Replace with your actual 404 page
       return;
