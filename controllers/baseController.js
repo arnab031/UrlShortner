@@ -6,7 +6,7 @@ const bigquery = require("../configuration/bigqueryConfig");
 const { default: axios } = require("axios");
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-  12
+  5
 );
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
 
   async storeShortUrl(req, res) {
     const { longUrl } = req.body;
-    const shortCode = nanoid(12); // Generate a unique short code
+    const shortCode = nanoid(5); // Generate a unique short code
     await db
       .collection("ShortLinks")
       .doc(shortCode)
